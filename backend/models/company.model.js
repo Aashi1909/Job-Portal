@@ -3,6 +3,7 @@ const companySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        unique: true
     },
     description: {
         type: String,
@@ -24,4 +25,4 @@ const companySchema = new mongoose.Schema({
     
 }, {timestamps: true});
 
-export default mongoose.model("Company", companySchema);
+export const Company = mongoose.model("Company", companySchema);
