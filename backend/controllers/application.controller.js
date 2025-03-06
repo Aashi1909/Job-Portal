@@ -8,7 +8,7 @@ export const applyJob = async(req, res) =>{
         if(!jobId){
             return res.status(400).json({message:" Job Id is required", success: false})
         }
-        //check if the user has already applied for the job 
+         //check if the user has already applied for the job 
         const existingApplication = await Application.findOne({job: jobId, applicant: userId})
         if(existingApplication){
             return res.status(400).json({message:"You have already for this Job", success: false})
@@ -64,6 +64,34 @@ export const getApplicants = async(req, res) =>{
             return res.status(400).json({message:"Job not Found", success: false})
         }
         return res.status(200).json({message:"Application Fetched Successfully", job, success:true})
+    }catch(error)
+    {
+
+    }
+}
+export const updateStatus = async(req, res) =>{
+    try{
+        const {status} = req.body;
+        const applicationId = req.params.id;
+        if(!status)
+        {
+            return res.status(400).json({message:"Status is Required", success: false})
+        }
+        //find the application by applicationId
+        const application = await Application.findOne({_id:applicationId})
+        if(!application)
+         {
+            return res.status(400).json({message:"Application Not Found", success: false})
+
+        }
+
+        //update status
+        application.status = status.toLowerCase();
+        await application.save();
+
+        return res.status(200).json({message:"Status Updated Successfully", success:true})
+
+
     }catch(error)
     {
 
