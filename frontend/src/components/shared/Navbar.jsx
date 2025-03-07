@@ -1,14 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button"
+import {LogOut, User2} from 'lucide-react';
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
   } from "@/components/ui/popover"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
 
   
 function Navbar() {
+  const user = false;
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
@@ -23,7 +26,15 @@ function Navbar() {
             <li>Jobs</li>
             <li>Browse</li>
           </ul>
-          <Popover >
+          {
+            !user ? (
+              <div className="flex items-center gap-4"> 
+                <Link to= "/login"><Button variant="outline">Login</Button></Link>
+                <Link to ="/signup"><Button className="bg-red-600 hover:bg-red-800" >SignUp</Button></Link>
+                
+              </div>
+            ) : (
+              <Popover >
             <PopoverTrigger asChild>
             <Avatar className="cursor-pointer">
                 <AvatarImage src="https://github.com/shadcn.png" />
@@ -41,15 +52,22 @@ function Navbar() {
                 </div>
                 </div>
 
-                <div>
-                    <Button>View Profile
-
-                    </Button>
-
+                <div className="flex flex-col my-2 text-gray -700">
+                  <div className="flex w-fit items-center gap-1 cursor-pointer">
+                    <User2 />
+                    <Button variant="link">View Profile</Button>
+                  </div>
+                  <div className="flex w-fit items-center gap-1 cursor-pointer">
+                    <LogOut />
+                    <Button variant="link">Logout</Button>
+                  </div>
                 </div>
-            
             </PopoverContent>
           </Popover>
+
+            )
+          }
+          
         </div>
       </div>
     </div>
