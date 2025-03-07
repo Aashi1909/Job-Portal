@@ -4,7 +4,11 @@ import {Input} from '../ui/input'
 import Navbar from "../shared/Navbar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {Button} from '../ui/button'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "sonner";
+import { USER_API_URL } from "../../utils/constant";
+
 
 
 const Login =() =>{
@@ -13,12 +17,27 @@ const Login =() =>{
         password:"",
         role:"",
     });
+    const navigate = useNavigate();
     const changeEventHandler = (e) => {
         setInput({...input, [e.target.name]: e.target.value});
     }
     const submitHandler= async(e) =>{
         e.preventDefault();
-        console.log(input);
+        try{
+            const res = await axios.post(`${USER_API_URL}/login`, input,{
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                },
+                withCredentials: true
+            });
+            if(res.data.success){
+                navigate("/");
+                toast.success(res.data.message);    
+            }
+        }catch(error){
+            console.log(error);
+            
+        }
     }
     return (
         <div>
