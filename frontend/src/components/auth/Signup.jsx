@@ -42,14 +42,13 @@ const Signup =() =>{
             try{
                 const res = await axios.post(`${USER_API_URL}/register`, formData,{
                     headers: {
-                        "Content-Type": "multipart/form-data"
+                        "Content-Type": "application/json"
                     },
                     withCredentials: true
                 });
                 if(res.data.success){
                     navigate("/login");
                     toast.success(res.data.message);
-                    
                 }
 
             }catch(error){

@@ -1,5 +1,5 @@
 import {User} from "../models/user.model.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
@@ -12,10 +12,13 @@ export const register = async (req, res) => {
         if(user){
             return res.status(400).json({message: "User already exists", success:false});
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await User.create({fullname, email, password: hashedPassword, role, phoneNumber}).save();
+        const hashedPassword = await bcrypt.hash(String(password), 10);
+        await User.create({fullname, email, password: hashedPassword, role, phoneNumber});
         return res.status(201).json({message: "User registered successfully", success:true});
      } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Internal server error", success: false });
+
      }
 }
 
@@ -29,7 +32,10 @@ export const login = async (req, res) => {
         if(!user){
             return res.status(400).json({message: "User does not exist", success:false});
         }
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        console.log("Input Password Type:", typeof password);
+        console.log("Stored Password Type:", typeof user.password);
+
+        const isPasswordValid = await bcrypt.compare(String(password), String(user.password));
         if(!isPasswordValid){
             return res.status(400).json({message: "Invalid password", success:false});
         }
@@ -52,6 +58,8 @@ export const login = async (req, res) => {
 
         return res.status(200).cookie("token", token, {maxAge:1*24*60*60*1000, httpOnly: true, sameSite:'strict'}).json({message: `Welcome Back ${user.fullname} `, success:true});
     } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Internal server error", success: false });
     }
 }
 export const logout = async (req, res) => {

@@ -26,7 +26,7 @@ const Login =() =>{
         try{
             const res = await axios.post(`${USER_API_URL}/login`, input,{
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    "Content-Type": "application/json"
                 },
                 withCredentials: true
             });
@@ -48,11 +48,11 @@ const Login =() =>{
                     
                     <div className="my-2">
                         <Label className="mt-3 text-[16px]" >Email</Label>
-                        <Input type="email" placeholder="Enter Your Email" value={input.email} name="email" className="mt-3"  />
+                        <Input type="email" placeholder="Enter Your Email" value={input.email} name="email" className="mt-3" onChange={changeEventHandler}  />
                     </div>
                     <div className="my-2">
                         <Label className="mt-3 text-[16px]" >Password</Label>
-                        <Input type="password" placeholder="Enter Your Password" value={input.password} name="password" className="mt-3"  />
+                        <Input type="password" placeholder="Enter Your Password" value={input.password} name="password" className="mt-3" onChange={changeEventHandler}  />
                     </div>
                     <div className="flex items-center justify-between">
                     <RadioGroup className="flex items-center gap-4 my-5">
