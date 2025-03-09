@@ -16,7 +16,7 @@ export const register = async (req, res) => {
         await User.create({fullname, email, password: hashedPassword, role, phoneNumber});
         return res.status(201).json({message: "User registered successfully", success:true});
      } catch (error) {
-        console.log(error);
+        console.log(error, "msg");
         return res.status(500).json({ message: "Internal server error", success: false });
 
      }
@@ -32,8 +32,6 @@ export const login = async (req, res) => {
         if(!user){
             return res.status(400).json({message: "User does not exist", success:false});
         }
-        console.log("Input Password Type:", typeof password);
-        console.log("Stored Password Type:", typeof user.password);
 
         const isPasswordValid = await bcrypt.compare(String(password), String(user.password));
         if(!isPasswordValid){

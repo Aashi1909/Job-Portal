@@ -50,8 +50,18 @@ const Signup =() =>{
                     navigate("/login");
                     toast.success(res.data.message);
                 }
+                else{
+                    toast.error(res.data.message);
+                }
 
             }catch(error){
+                if (error.response) {
+                    toast.error(error.response.data.message || "Something went wrong!");
+                } else if (error.request) {
+                    toast.error("No response from server. Please try again.");
+                } else {
+                    toast.error("An unexpected error occurred.");
+                }
                 console.log(error);
                 
             }
