@@ -1,54 +1,55 @@
-import React from 'react'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel'
-import { Button } from './ui/button'
-import { Car } from 'lucide-react'
+import React from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
+import { Button } from "./ui/button";
 
-const category =[
-    "Frontend Developer",
-    "Backend Developer",
-    "Full Stack Developer",
-    "UI/UX Designer",
-    "Data Scientist",
-    "Mobile Developer",
-    "DevOps Engineer",
-    "Cloud Engineer",
-    "Product Manager",
-    "QA Engineer",
-    "Cybersecurity Analyst",
-    "Blockchain Developer",
-    "Artificial Intelligence (AI) Engineer",
-    "Machine Learning Engineer",
-    "Robotics Engineer",
-    "Data Engineer",
-    "Game Developer",
-    "Digital Marketing Specialist",
-    "Content Writer",
-    "Social Media Manager",
-    "Video Editor",
-    "Graphic Designer",
-]
+const category = [
+  "Frontend Developer",
+  "Backend Developer",
+  "Full Stack Developer",
+  "UI/UX Designer",
+  "Data Scientist",
+  "Mobile Developer",
+  "DevOps Engineer",
+  "Cloud Engineer",
+  "Product Manager",
+  "QA Engineer",
+  "Cybersecurity Analyst",
+  "Blockchain Developer",
+  "AI Engineer",
+  "Robotics Engineer",
+  "Data Engineer",
+  "Game Developer",
+  "Content Writer",
+  "Social Media Manager",
+  "Video Editor",
+  "Graphic Designer",
+];
+
 const CategoryCarousel = () => {
   return (
-    <div>
-        <Carousel className="w-full max-w-xl mx-auto my-20 ">
-            <CarouselContent>
-                {
-                    category.map((item, index) => (
-                    <CarouselItem className="md:basis-1/2 lg:basis-1/3 ">
-                        <Button  variant="outline" className="rounded-full bg-red-100">{item}</Button>
-                    </CarouselItem>
-                ))
-
-                }
-               
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-
-        </Carousel>
-      
+    <div className="w-full flex justify-center">
+      <Carousel className="w-full max-w-4xl mx-auto my-10">
+        <CarouselContent className="flex gap-x-4">
+          {category.map((item, index) => (
+            <CarouselItem key={index} className="basis-1/3 md:basis-1/4 lg:basis-1/5">
+              <Button variant="outline" className="rounded-full bg-red-100 w-full min-w-[150px] max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap"
+              >
+                {item}
+              </Button>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </div>
-  )
-}
+  );
+};
 
-export default CategoryCarousel
+export default CategoryCarousel;
