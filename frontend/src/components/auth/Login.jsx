@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import {Label} from '../ui/label'
-import {Input} from '../ui/input'
+ import {Input} from '../ui/input'
 import Navbar from "../shared/Navbar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {Button} from '../ui/button'
@@ -8,8 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 import { USER_API_URL } from "../../utils/constant";
-
-
+import { setUser } from '@/redux/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import {Label} from '../ui/label'
 
 const Login =() =>{
     const [input, setInput] = useState({
@@ -17,6 +17,9 @@ const Login =() =>{
         password:"",
         role:"",
     });
+    const { user } = useSelector(store => store.auth);
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
     const changeEventHandler = (e) => {
         setInput({...input, [e.target.name]: e.target.value});
@@ -31,6 +34,7 @@ const Login =() =>{
                 withCredentials: true
             });
             if(res.data.success){
+                dispatch(setUser(res.data.user));
                 navigate("/");
                 toast.success(res.data.message);    
             }

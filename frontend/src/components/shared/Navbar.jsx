@@ -8,10 +8,12 @@ import {
     PopoverTrigger,
   } from "@/components/ui/popover"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { useDispatch, useSelector } from 'react-redux'
+
 
   
 function Navbar() {
-  const user = false;
+  const {user} = useSelector(store => store.auth) ;
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
@@ -24,7 +26,7 @@ function Navbar() {
           <ul className="flex font-medium items-center gap-5">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/jobs">Jobs</Link></li>
-            <li>Browse</li>
+            <li><Link to="/browse">Browse</Link></li>
           </ul>
           {
             !user ? (
