@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button"
-import { Link } from "react-router-dom";
 import {LogOut, User2} from 'lucide-react';
 import {
     Popover,
@@ -9,12 +8,12 @@ import {
     PopoverTrigger,
   } from "@/components/ui/popover"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { useDispatch, useSelector } from 'react-redux'
-
+import { useSelector } from 'react-redux'
 
   
 function Navbar() {
   const {user} = useSelector(store => store.auth) ;
+  
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">

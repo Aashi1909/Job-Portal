@@ -8,7 +8,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { USER_API_URL } from "../../utils/constant";
 import { setUser } from '@/redux/authSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {Label} from '../ui/label'
 
 const Login =() =>{
@@ -17,7 +17,6 @@ const Login =() =>{
         password:"",
         role:"",
     });
-    const { user } = useSelector(store => store.auth);
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
