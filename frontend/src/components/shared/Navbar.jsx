@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button"
+import { Link } from "react-router-dom";
 import {LogOut, User2} from 'lucide-react';
 import {
     Popover,
@@ -57,7 +58,7 @@ function Navbar() {
                 <div className="flex flex-col my-2 text-gray -700">
                   <div className="flex w-fit items-center gap-1 cursor-pointer">
                     <User2 />
-                    <Button variant="link">View Profile</Button>
+                    <Button variant="link"><Link to="/profile">View Profile</Link></Button>
                   </div>
                   <div className="flex w-fit items-center gap-1 cursor-pointer">
                     <LogOut />
