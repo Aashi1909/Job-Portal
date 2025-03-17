@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import {
     Dialog,
     DialogContent,
@@ -10,10 +10,12 @@ import {
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
-import { useSelector } from "react-redux";
-import {Input} from '../ui/input'
+import { useDispatch, useSelector } from "react-redux";
+import {Input} from './ui/input';
 import axios from "axios";
-import { USER_API_URL } from "../../utils/constant";
+import { setUser } from '@/redux/authSlice'
+import { USER_API_URL } from '@/utils/constant';
+import { toast } from "sonner";
 
 
 
@@ -30,6 +32,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         skills: user?.profile?.skills.map(skill =>skill),
         file: user?.profile?.resume,
     })
+    const dispatch = useDispatch();
 
     const changeEventHandler =(e) =>{
         setInput({...input,[e.target.name] : e.target.value})
@@ -60,14 +63,17 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 withCredentials : true
             })
             if(res.data.success){
-
+                dispatch(setUser(res.data.user));
+                toast.success(res.data.message);
             }
 
         }catch(error)
         {
-
+            console.log(error);
+            toast.error(error.response.data.message);
         }
-
+        setOpen(false);
+        console.log(input, "input");
     }
 
     return (
@@ -101,7 +107,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="file">Resume</Label>
-                                <Input id="file" type="file" name="file" value={input.file} accept="application/pdf" className="col-span-3" onChange={fileChangeHandler } />
+                                <Input id="file" type="file" name="file" accept="application/pdf" className="col-span-3" onChange={fileChangeHandler } />
                             </div>
 
                         </div>
