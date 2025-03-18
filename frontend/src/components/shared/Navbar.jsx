@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button"
 import {LogOut, User2} from 'lucide-react';
 import {
@@ -8,11 +8,31 @@ import {
     PopoverTrigger,
   } from "@/components/ui/popover"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from "sonner";
 
   
 function Navbar() {
   const {user} = useSelector(store => store.auth) ;
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  const logoutHandler = async() =>{
+    try{
+      const res = await axios.get(`${USER_API_END_POINT}/logout`,{
+        withCredentials:true
+      })
+      if(res.data.success){
+        dispatch(setUser(null));
+        navigate('/');
+        toast.success(res.data.message)
+      }
+
+    }catch(error){
+      console.log(error)
+      toast.error(error.response.data.message)
+    }
+  }
   
   return (
     <div className="bg-white">
@@ -39,18 +59,18 @@ function Navbar() {
               <Popover >
             <PopoverTrigger asChild>
             <Avatar className="cursor-pointer">
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={user?.profile?.profilePhoto} />
             </Avatar>
 
             </PopoverTrigger>
             <PopoverContent className="w-80">
                 <div className="flex gap-4 space-y-2">
                 <Avatar className="cursor-pointer">
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src={user?.profile?.profilePhoto} />
                 </Avatar>
                 <div>
-                <h4 className="font-medium">Aashi Aggarwal</h4>
-                <p className="text-muted-foreground ">Software Engineer</p>
+                <h4 className="font-medium">{user?.fullname}</h4>
+                <p className="text-muted-foreground ">{user?.profile?.bio}</p>
                 </div>
                 </div>
 
@@ -61,7 +81,7 @@ function Navbar() {
                   </div>
                   <div className="flex w-fit items-center gap-1 cursor-pointer">
                     <LogOut />
-                    <Button variant="link">Logout</Button>
+                    <Button variant="link" onClick={logoutHandler}>Logout</Button>
                   </div>
                 </div>
             </PopoverContent>
