@@ -10,10 +10,11 @@ export const registerCompany = async (req, res) => {
         if(company){
             return res.status(400).json({message: "Company already exists", success:false});
         }
-        company = await Company.create({name: companyName, userId: req.id}).save();
+        company = await Company.create({name: companyName, userId: req.id})
         return res.status(201).json({message: "Company Registered successfully",company, success:true});
 
     }catch(error){
+        console.log(error);
 
     }
 }

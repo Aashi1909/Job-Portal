@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import Navbar from "./shared/Navbar";
+import { useEffect } from "react";
 import axios from "axios";
 import { JOB_API_URL } from "../utils/constant";
-import { useDispatch } from "react-redux";
-import {setAllJobs} from '@/redux/jobSlice'
+import { setAllJobs } from '@/redux/jobSlice'
+import { useDispatch } from 'react-redux'
+
 
 
 const userGetAllJobs =() =>{
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     useEffect(() => {
         const fetchAllJobs = async() =>{
             try{
