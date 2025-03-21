@@ -1,4 +1,3 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button"
 import {LogOut, User2} from 'lucide-react';
@@ -10,16 +9,23 @@ import {
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_URL } from "@/utils/constant";
+import { setUser } from '@/redux/authSlice'
+
 
   
 function Navbar() {
-  const {user} = useSelector(store => store.auth) ;
+  const {user} = useSelector(store =>store.auth);
+
+  console.log(user, "userrrrr")
   const dispatch = useDispatch();
   const navigate = useNavigate()
+  
 
   const logoutHandler = async() =>{
     try{
-      const res = await axios.get(`${USER_API_END_POINT}/logout`,{
+      const res = await axios.get(`${USER_API_URL}/logout`,{
         withCredentials:true
       })
       if(res.data.success){
@@ -56,25 +62,28 @@ function Navbar() {
                 
               </div>
             ) : (
-              <Popover >
+            <Popover key={user?.profile?.profilePhoto} >
             <PopoverTrigger asChild>
             <Avatar className="cursor-pointer">
-                <AvatarImage src={user?.profile?.profilePhoto} />
+                <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
             </Avatar>
 
             </PopoverTrigger>
-            <PopoverContent className="w-80">
-                <div className="flex gap-4 space-y-2">
-                <Avatar className="cursor-pointer">
-                <AvatarImage src={user?.profile?.profilePhoto} />
-                </Avatar>
+            <PopoverContent className="w-80"  >
+                <div className="flex gap-4 space-y-2 ">
+                <Avatar className="cursor-pointer ">
+                <AvatarImage  
+                src={user?.profile?.profilePhoto} 
+                alt="@shadcn" 
+              />                
+              </Avatar>
                 <div>
-                <h4 className="font-medium">{user?.fullname}</h4>
+                <h4 className="font-medium ">{user?.fullname}</h4>
                 <p className="text-muted-foreground ">{user?.profile?.bio}</p>
                 </div>
                 </div>
 
-                <div className="flex flex-col my-2 text-gray -700">
+                <div className="flex flex-col my-2 text-gray-700">
                   <div className="flex w-fit items-center gap-1 cursor-pointer">
                     <User2 />
                     <Button variant="link"><Link to="/profile">View Profile</Link></Button>

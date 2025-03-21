@@ -8,29 +8,23 @@ export const register = async (req, res) => {
     try {
         const { fullname, email, password, role, phoneNumber } = req.body;
 
-        // Check for missing fields
         if (!fullname || !email || !password || !role || !phoneNumber) {
             return res.status(400).json({ message: "All fields are required", success: false });
         }
 
-        // Check if user already exists
         const userExists = await User.findOne({ email });
         if (userExists) {
             return res.status(400).json({ message: "User already exists", success: false });
         }
 
-        // Handle file upload
         if (!req.file) {
             return res.status(400).json({ message: "Profile picture is required", success: false });
         }
 
         const fileUri = getDataUri(req.file);
         const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-
-        // Hash password
         const hashedPassword = await bcrypt.hash(String(password), 10);
 
-        // Create user
         await User.create({
             fullname,
             email,

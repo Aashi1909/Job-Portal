@@ -40,7 +40,7 @@ const Job = ({job}) => {
             </div>
 
             <div className='flex items-center mt-4 gap-2'>
-                <Badge className={'text-[#F83002] font-bold'} variant="ghost">{job?.position}</Badge>
+                <Badge className={'text-[#F83002] font-bold'} variant="ghost">{job?.position} Position</Badge>
                 <Badge className={'text-[#F83002] font-bold'} variant="ghost">{job?.jobType}</Badge>
                 <Badge className={'text-[#F83002] font-bold'} variant="ghost">{job?.salary} LPA</Badge>
             </div>
