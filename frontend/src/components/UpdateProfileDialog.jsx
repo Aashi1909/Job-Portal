@@ -55,6 +55,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         if(input.file){
             formData.append("file", input.file)
         }
+
         try{
             setLoading(true);
             const res = await axios.post(`${USER_API_URL}/profile/update`, formData,{
@@ -75,7 +76,6 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             setLoading(false);
         }
         setOpen(false);
-        console.log(input, "input");
     }
 
     return (
@@ -97,7 +97,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="number">Number</Label>
-                                <Input id="number" type="number" name="number" value={input.phoneNumber} className="col-span-3" onChange={changeEventHandler} />
+                                <Input id="number" type="number" name="phoneNumber" value={input.phoneNumber} className="col-span-3" onChange={changeEventHandler} />
                             </div>
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="bio">Bio</Label>
