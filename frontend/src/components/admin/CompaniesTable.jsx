@@ -4,10 +4,12 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import React, { useEffect, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const CompaniesTable = () => {
     const {companies, searchCompanyByText} = useSelector(store =>store.company)
     const [filterCompany, setFilterCompany] = useState(companies)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const filteredCompany = companies.length >=0 && companies.filter((company) => {
@@ -47,7 +49,7 @@ const CompaniesTable = () => {
                                 <Popover>
                                     <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
                                     <PopoverContent className="w-32">
-                                        <div className='flex items-center gap-2 w-fit cursor-pointer'> 
+                                        <div className='flex items-center gap-2 w-fit cursor-pointer' onClick={() => navigate(`/admin/companies/${company._id}`)}> 
                                             <Edit2 className='w-4' />
                                             <span>Edit</span>
                                         </div>
