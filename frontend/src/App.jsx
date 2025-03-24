@@ -50,11 +50,11 @@ const appRouter = createBrowserRouter([
   },
   {
     path:'/admin/companies/:id',
-    element: <Companies />
+    element: <CompanySetup />
   },
   {
     path:'/admin/companies/create',
-    element: <CompanySetup />
+    element: <CompanyCreate />
   },
 ])
 

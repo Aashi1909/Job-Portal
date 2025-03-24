@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 
 
 
-const userGetAllJobs =() =>{
+const useGetAllJobs =() =>{
     const dispatch = useDispatch();
     useEffect(() => {
         const fetchAllJobs = async() =>{
@@ -28,4 +28,4 @@ const userGetAllJobs =() =>{
     }, [])
 }
 
-export default userGetAllJobs
+export default useGetAllJobs
