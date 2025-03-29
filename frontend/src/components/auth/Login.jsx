@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
  import {Input} from '../ui/input'
 import Navbar from "../shared/Navbar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -8,7 +8,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { USER_API_URL } from "../../utils/constant";
 import { setUser } from '@/redux/authSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {Label} from '../ui/label'
 
 const Login =() =>{
@@ -18,7 +18,7 @@ const Login =() =>{
         role:"",
     });
     const dispatch = useDispatch();
-
+    const {user} = useSelector(store=>store.auth)
     const navigate = useNavigate();
     const changeEventHandler = (e) => {
         setInput({...input, [e.target.name]: e.target.value});
@@ -50,6 +50,12 @@ const Login =() =>{
             
         }
     }
+    useEffect(() => {
+        if(user){
+            navigate("/")
+        }
+        
+    })
     return (
         <div>
             <Navbar/>

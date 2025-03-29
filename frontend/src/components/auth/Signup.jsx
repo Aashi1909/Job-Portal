@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Label} from '../ui/label'
 import {Input} from '../ui/input'
 import Navbar from "../shared/Navbar";
@@ -8,9 +8,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { USER_API_URL } from "../../utils/constant";
 import axios from "axios";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 
 const Signup =() =>{
+    const {user} = useSelector(store=>store.auth)
     const [input, setInput] = useState({
             fullname:"",
             email:"",
@@ -65,6 +67,12 @@ const Signup =() =>{
                 
             }
         }
+         useEffect(() => {
+                if(user){
+                    navigate("/")
+                }
+                
+            })
     return (
         <div>
             <Navbar/>
