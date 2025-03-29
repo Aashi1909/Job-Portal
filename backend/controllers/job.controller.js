@@ -74,15 +74,21 @@ export const getJobById = async(req, res) =>{
 export const getAdminJobs = async(req, res) =>{
     try{
         const adminId = req.id;
-        const jobs = await Job.find({created_by:adminId}).populate({
-            path:"company",
-            createdAt:-1
-        })
-        if(!jobs){
+        const jobs = await Job.find({ created_by: adminId })
+        .populate('company') 
+        .sort({ createdAt: -1 });
+
+        // for (const job of jobs) {
+        //     job.company = await Company.findById(job.company);
+        // }
+        console.log(jobs, "JOBSSSSS");
+
+        if(!jobs.length){
             return res.status(404).json({message:"Jobs Not Found", success:false})
         }
         return res.status(200).json({message:"Job Fetched Successfully", jobs, success:true})
     }catch(error){
+        console.log(error);
 
     }
 }
